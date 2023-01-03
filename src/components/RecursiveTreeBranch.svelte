@@ -32,9 +32,9 @@
 <div class="branch">
 	<div class="leaf {branch.children && branch.children.length > 0 ? '' : 'spacer'}">
 		{#if branch.children.length > 0}
-			<div class="expansion-toggle" on:click={() => onClickToggleExpansion(branch)}>
+			<button class="expansion-toggle" on:click={() => onClickToggleExpansion(branch)}>
 				{#if branch.isExpanded}-{:else}+{/if}
-			</div>
+			</button>
 		{/if}
 		<input
 			type="checkbox"
