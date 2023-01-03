@@ -1,7 +1,5 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
-	// import Item, { Graphic } from '@smui/list';
-	// import Checkbox from '@smui/checkbox';
 	import { SelectionState } from '../models/dataModels';
 	import type { BranchLeaf } from '../models/dataModels';
 	import { setExpansionState, updateSelectionStateOfTree } from '../store/tree';
@@ -16,7 +14,7 @@
 		}
 	}
 
-	function onToggleSelectCheckbox(e: CustomEvent, branch: BranchLeaf): void {
+	function onToggleSelectCheckbox(e: MouseEvent, branch: BranchLeaf): void {
 		updateSelectionStateOfTree(branch, (e.target as HTMLInputElement).checked);
 		dispatchSelectionChanged();
 	}
