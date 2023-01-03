@@ -105,5 +105,6 @@
 		border: 1px solid rgba(0, 0, 0, 0.1);
 		background-color: rgba(0, 0, 0, 0.025);
 		border-radius: 4px;
+		padding: 8px;
 	}
 </style>

@@ -35,6 +35,7 @@
 			</button>
 		{/if}
 		<input
+			class="checkbox"
 			type="checkbox"
 			checked={branch.selectionState === SelectionState.ALL}
 			indeterminate={branch.selectionState === SelectionState.SOME}
@@ -63,10 +64,23 @@
 			display: flex;
 			align-items: center;
 			width: 100%;
-			border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-			border-left: 1px solid rgba(0, 0, 0, 0.1);
-			border-top: 1px solid rgba(0, 0, 0, 0.1);
+			border: 1px solid rgba(0, 0, 0, 0.1);
 			background-color: white;
+			min-height: 2rem;
+			border-radius: 2px;
+			margin: 1px;
+			font-family: sans-serif;
+			.expansion-toggle {
+				border: none;
+				background-color: transparent;
+				font-size: 1.5rem;
+				margin-left: 8px;
+				width: 16px;
+				height: 100%;
+			}
+			.checkbox {
+				margin: 0.5rem;
+			}
 		}
 		ul {
 			margin: 0;
