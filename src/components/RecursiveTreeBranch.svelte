@@ -1,30 +1,30 @@
 <script lang="ts">
-	import { createEventDispatcher } from 'svelte';
-	import { SelectionState } from '../models/dataModels';
-	import type { BranchLeaf } from '../models/dataModels';
-	import { setExpansionState, updateSelectionStateOfTree } from '../store/tree';
+	import { createEventDispatcher } from 'svelte'
+	import { SelectionState } from '../models/dataModels'
+	import type { BranchLeaf } from '../models/dataModels'
+	import { setExpansionState, updateSelectionStateOfTree } from '../store/tree'
 
-	const dispatch = createEventDispatcher();
+	const dispatch = createEventDispatcher()
 
-	export let branch: BranchLeaf;
+	export let branch: BranchLeaf
 
 	function onClickToggleExpansion(branch: BranchLeaf): void {
 		if (branchHasChildren(branch)) {
-			setExpansionState(branch.id, !branch.isExpanded);
+			setExpansionState(branch.id, !branch.isExpanded)
 		}
 	}
 
 	function onToggleSelectCheckbox(e: MouseEvent, branch: BranchLeaf): void {
-		updateSelectionStateOfTree(branch, (e.target as HTMLInputElement).checked);
-		dispatchSelectionChanged();
+		updateSelectionStateOfTree(branch, (e.target as HTMLInputElement).checked)
+		dispatchSelectionChanged()
 	}
 
 	function dispatchSelectionChanged(): void {
-		dispatch('selectionChanged');
+		dispatch('selectionChanged')
 	}
 
 	const branchHasChildren = (branch: BranchLeaf): boolean =>
-		branch.children && branch.children.length > 0;
+		branch.children && branch.children.length > 0
 </script>
 
 <div class="branch">

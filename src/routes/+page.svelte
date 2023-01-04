@@ -1,12 +1,12 @@
 <script lang="ts">
-	import { mapDataToBranchLeaf } from '../models/dataModels';
-	import type { Data } from '../models/dataModels';
-	import { onMount } from 'svelte/internal';
-	import RecursiveTreeBranch from '../components/RecursiveTreeBranch.svelte';
-	import { tree as storedTree } from '../store/tree';
+	import { mapDataToBranchLeaf } from '../models/dataModels'
+	import type { Data } from '../models/dataModels'
+	import { onMount } from 'svelte/internal'
+	import RecursiveTreeBranch from '../components/RecursiveTreeBranch.svelte'
+	import { tree as storedTree } from '../store/tree'
 
-	export let loading: boolean;
-	export let permissionsData: Data[] = [];
+	export let loading: boolean
+	export let permissionsData: Data[] = []
 
 	const exampleData: Data[] = [
 		{
@@ -78,19 +78,19 @@
 				}
 			]
 		}
-	];
+	]
 
 	onMount(() => {
-		setTree();
-	});
+		setTree()
+	})
 
 	function setTree(): void {
-		$storedTree = mapDataToBranchLeaf(exampleData);
-		loading = false;
+		$storedTree = mapDataToBranchLeaf(exampleData)
+		loading = false
 	}
 
 	function onSelectionChanged(): void {
-		permissionsData = mapDataToBranchLeaf($storedTree);
+		permissionsData = mapDataToBranchLeaf($storedTree)
 	}
 </script>
 

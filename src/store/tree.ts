@@ -1,55 +1,55 @@
-import { SelectionState } from '../models/dataModels';
-import { writable } from 'svelte/store';
-import type { PermissionsBranch } from '../models/dataModels';
+import { SelectionState } from '../models/dataModels'
+import { writable } from 'svelte/store'
+import type { PermissionsBranch } from '../models/dataModels'
 
-export const tree = writable<PermissionsBranch[]>([]);
+export const tree = writable<PermissionsBranch[]>([])
 
 export function setExpansionState(id: string, isExpanded: boolean): void {
 	tree.update((tree) => {
-		const node = findNode(tree, id);
+		const node = findNode(tree, id)
 		if (node) {
-			node.isExpanded = isExpanded;
+			node.isExpanded = isExpanded
 		}
-		return tree;
-	});
+		return tree
+	})
 }
 
 export function updateSelectionStateOfTree(branch: PermissionsBranch, checked: boolean): void {
 	tree.update((tree) => {
-		const node = findNode(tree, branch.id);
+		const node = findNode(tree, branch.id)
 		if (node && node.children && node.children.length > 0) {
 			if (checked) {
 				// all children and children of children are selected
-				node.selectionState = SelectionState.ALL;
+				node.selectionState = SelectionState.ALL
 				node.children.forEach((child) => {
-					updateSelectionStateOfTree(child, true);
-				});
+					updateSelectionStateOfTree(child, true)
+				})
 			} else {
 				// all children and children of children are deselected
-				node.selectionState = SelectionState.NONE;
+				node.selectionState = SelectionState.NONE
 				node.children.forEach((child) => {
-					updateSelectionStateOfTree(child, false);
-				});
+					updateSelectionStateOfTree(child, false)
+				})
 			}
 		} else if (node) {
-			node.selectionState = checked ? SelectionState.ALL : SelectionState.NONE;
+			node.selectionState = checked ? SelectionState.ALL : SelectionState.NONE
 		}
-		return updateTreeFromChildren(tree);
-	});
+		return updateTreeFromChildren(tree)
+	})
 }
 
 export function updateTreeFromChildren(tree: PermissionsBranch[]): PermissionsBranch[] {
 	return tree.map((item) => {
 		if (item.children && item.children.length > 0) {
-			const children = updateTreeFromChildren(item.children);
+			const children = updateTreeFromChildren(item.children)
 			const allChildrenSelected = children.every(
 				(child) => child.selectionState === SelectionState.ALL
-			);
+			)
 			const someChildrenSelected = children.some(
 				(child) =>
 					child.selectionState === SelectionState.SOME ||
 					(child.selectionState === SelectionState.ALL && !allChildrenSelected)
-			);
+			)
 			return {
 				id: item.id,
 				label: item.label,
@@ -60,21 +60,21 @@ export function updateTreeFromChildren(tree: PermissionsBranch[]): PermissionsBr
 					? SelectionState.SOME
 					: SelectionState.NONE,
 				isExpanded: allChildrenSelected ? true : item.isExpanded || false
-			};
+			}
 		} else {
-			return item;
+			return item
 		}
-	});
+	})
 }
 
 function findNode(tree: PermissionsBranch[], id: string): PermissionsBranch | undefined {
 	for (const node of tree) {
 		if (node.id === id) {
-			return node;
+			return node
 		} else if (node.children && node.children.length > 0) {
-			const childNode = findNode(node.children, id);
+			const childNode = findNode(node.children, id)
 			if (childNode) {
-				return childNode;
+				return childNode
 			}
 		}
 	}
