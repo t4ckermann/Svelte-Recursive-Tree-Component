@@ -30,14 +30,17 @@
 <div class="branch">
 	<div class="leaf {branch.children && branch.children.length > 0 ? '' : 'spacer'}">
 		{#if branch.children.length > 0}
-			<button class="expansion-toggle" on:click={() => onClickToggleExpansion(branch)}>
+			<button
+				class="expansion-toggle {branch.isExpanded ? 'expanded' : ''}"
+				on:click={() => onClickToggleExpansion(branch)}
+			>
 				{#if branch.isExpanded}-{:else}+{/if}
 			</button>
 		{/if}
-		<label
+		<label class="leaf-label"
 			><input
 				id={branch.id}
-				class="checkbox"
+				class="leaf-checkbox"
 				type="checkbox"
 				checked={branch.selectionState === SelectionState.ALL}
 				indeterminate={branch.selectionState === SelectionState.SOME}
@@ -58,6 +61,8 @@
 </div>
 
 <style lang="scss">
+	$active-color: #007bff;
+	$font-size: 1rem;
 	.branch {
 		width: 100%;
 		display: flex;
@@ -77,12 +82,26 @@
 				border: none;
 				background-color: transparent;
 				font-size: 1.5rem;
-				margin-left: 8px;
+				margin: 4px;
 				width: 16px;
 				height: 100%;
+				&.expanded {
+					transform: translateY(-2px);
+				}
 			}
-			.checkbox {
-				margin: 0.5rem;
+
+			.leaf-label {
+				display: flex;
+				align-items: center;
+				font-size: $font-size;
+				.leaf-checkbox {
+					margin: 4px;
+					width: $font-size;
+					height: $font-size;
+				}
+				&:hover {
+					color: $active-color;
+				}
 			}
 		}
 		ul {
