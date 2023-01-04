@@ -34,14 +34,17 @@
 				{#if branch.isExpanded}-{:else}+{/if}
 			</button>
 		{/if}
-		<input
-			class="checkbox"
-			type="checkbox"
-			checked={branch.selectionState === SelectionState.ALL}
-			indeterminate={branch.selectionState === SelectionState.SOME}
-			on:click={(e) => onToggleSelectCheckbox(e, branch)}
-		/>
-		<span class="label"><b>{branch.label}</b> ({branch.id}) </span>
+		<label
+			><input
+				id={branch.id}
+				class="checkbox"
+				type="checkbox"
+				checked={branch.selectionState === SelectionState.ALL}
+				indeterminate={branch.selectionState === SelectionState.SOME}
+				on:click={(e) => onToggleSelectCheckbox(e, branch)}
+			/>
+			{branch.label}
+		</label>
 	</div>
 	{#if branch.children}
 		<ul class={branch.isExpanded ? 'expanded' : 'hidden'}>
