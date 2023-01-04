@@ -1,8 +1,8 @@
 import { SelectionState } from '../models/dataModels'
 import { writable } from 'svelte/store'
-import type { PermissionsBranch } from '../models/dataModels'
+import type { BranchLeaf } from '../models/dataModels'
 
-export const tree = writable<PermissionsBranch[]>([])
+export const tree = writable<BranchLeaf[]>([])
 
 export function setExpansionState(id: string, isExpanded: boolean): void {
 	tree.update((tree) => {
@@ -14,7 +14,7 @@ export function setExpansionState(id: string, isExpanded: boolean): void {
 	})
 }
 
-export function updateSelectionStateOfTree(branch: PermissionsBranch, checked: boolean): void {
+export function updateSelectionStateOfTree(branch: BranchLeaf, checked: boolean): void {
 	tree.update((tree) => {
 		const node = findNode(tree, branch.id)
 		if (node && node.children && node.children.length > 0) {
@@ -38,7 +38,7 @@ export function updateSelectionStateOfTree(branch: PermissionsBranch, checked: b
 	})
 }
 
-export function updateTreeFromChildren(tree: PermissionsBranch[]): PermissionsBranch[] {
+export function updateTreeFromChildren(tree: BranchLeaf[]): BranchLeaf[] {
 	return tree.map((item) => {
 		if (item.children && item.children.length > 0) {
 			const children = updateTreeFromChildren(item.children)
@@ -67,7 +67,7 @@ export function updateTreeFromChildren(tree: PermissionsBranch[]): PermissionsBr
 	})
 }
 
-function findNode(tree: PermissionsBranch[], id: string): PermissionsBranch | undefined {
+function findNode(tree: BranchLeaf[], id: string): BranchLeaf | undefined {
 	for (const node of tree) {
 		if (node.id === id) {
 			return node
